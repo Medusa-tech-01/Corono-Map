@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' /> -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
+    <title>Corona Virus Plotting Map</title>
+    <script src="main.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 28px;
+            background-color: rgb(48, 47, 47);
+            color: white;
+        }
+
+        #mode {
+            height: 175px;
+            width: 120px;
+            position: absolute;
+            top: 70px;
+            z-index: 2;
+            right: 11px;
+            background-color: rgb(118, 115, 115);
+            /* display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; */
+            padding-top: 3px;
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        .box {
+            padding: 5px 2px;
+            margin: 0px 5px;
+        }
+
+        #map {
+            height: 663px;
+            width: 100vw;
+        }
+    </style>
+</head>
+
+<body>
+    <header>Corona Virus World Plot</header>
+    <div id="mode">
+        <div class="box">
+            <input type="radio" name="rtoggle" id="satellite-streets-v12">
+            <label for="satellite-streets-v12">Satellite Street</label>
+        </div>
+        <div class="box">
+            <input type="radio" name="rtoggle" id="light-v10">
+            <label for="light-v10">Light Mode</label>
+        </div>
+        <div class="box">
+            <input type="radio" name="rtoggle" id="dark-v10" checked="checked">
+            <label for="dark-v10">Dark Mode</label>
+        </div>
+        <div class="box">
+            <input type="radio" name="rtoggle" id="streets-v12">
+            <label for="streets-v12">Streets</label>
+        </div>
+        <div class="box">
+            <input type="radio" name="rtoggle" id="outdoors-v12">
+            <label for="outdoors-v12">Outdoors</label>
+        </div>
+    </div>
+    <div id="map"></div>
+</body>
+
+<!-- <script src='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script> -->
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiaGFycnkxMjM0OTgiLCJhIjoiY2s4OXh1c3BqMGFsZzNvbXA3YmYyaGFhYSJ9.wmVMiMxlSqpzJPsj-UXr3Q';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        // style: 'mapbox://styles/mapbox/satellite-v9',
+        style: 'mapbox://styles/mapbox/dark-v10',
+        projection: 'globe',
+        // projection: 'naturalEarth', // starting projection
+        // zoom: 1.5,
+        // center: [10, 25]
+        zoom: 2,
+        center: [50,15]
+    });
+
+    const layerList = document.getElementById('mode');
+    const inputs = layerList.getElementsByTagName('input');
+    for (const input of inputs) {
+        input.onclick = (layer) => {
+            const layerId = layer.target.id;
+            map.setStyle('mapbox://styles/mapbox/' + layerId);
+        };
+    }
+
+    map.on('style.load', () => {
+        map.setFog({}); // Set the default atmosphere style
+    });
+
+</script>
+
+</html>
